@@ -1,0 +1,30 @@
+data_molecule_twomols
+
+_cell_length_a      10.000
+_cell_length_b      10.000
+_cell_length_c      10.000
+_cell_angle_alpha   90.000
+_cell_angle_beta    90.000
+_cell_angle_gamma   90.000
+
+_symmetry_space_group_name_H-M  'P 1'
+
+# two separate molecules in the asymmetric unit
+# your code splits these into m1 and m2 using get_lists
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+C1   C   0.100   0.100   0.100
+O1   O   0.200   0.100   0.100
+C2   C   0.600   0.600   0.600
+O2   O   0.700   0.600   0.600
+
+loop_
+_geom_bond_atom_site_label_1
+_geom_bond_atom_site_label_2
+_geom_bond_distance
+C1   O1   1.430
+C2   O2   1.430

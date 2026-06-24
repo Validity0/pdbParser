@@ -1,0 +1,7 @@
+ATOM      1  C   MOL A   1       1.000   1.000   1.000  1.00  0.00           C
+ATOM      2  O   MOL A   1       2.000   1.000   1.000  1.00  0.00           O
+ATOM      3  H   MOL A   1       0.500   1.000   1.000  1.00  0.00           H
+CONECT    1    2    3
+CONECT    2    1
+CONECT    3    1
+END

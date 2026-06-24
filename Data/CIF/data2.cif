@@ -1,0 +1,26 @@
+data_molecule_nobonds
+
+_cell_length_a      6.000
+_cell_length_b      6.000
+_cell_length_c      6.000
+_cell_angle_alpha   90.000
+_cell_angle_beta    90.000
+_cell_angle_gamma   90.000
+
+_symmetry_space_group_name_H-M  'P 1'
+
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+C1   C   0.16667   0.16667   0.16667
+O1   O   0.33333   0.16667   0.16667
+H1   H   0.08333   0.16667   0.16667
+
+# no _geom_bond loop at all
+# connections must be inferred from distances
+# C1-O1 distance = 1.43 (within C+O radii 0.76+0.66+0.4 = 1.82, so bonded)
+# C1-H1 distance = 1.09 (within C+H radii 0.76+0.31+0.4 = 1.47, so bonded)
+# O1-H1 distance = 1.80 (within O+H radii 0.66+0.31+0.4 = 1.37? NO, so not bonded)

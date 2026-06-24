@@ -1,0 +1,7 @@
+ATOM      1  C   MOL A   1       0.673   1.316   2.685  1.00  0.00           C
+ATOM      2  N   MOL A   1       1.490   1.972   2.685  1.00  0.00           N
+ATOM      3  O   MOL A   1       0.673   2.468   2.685  1.00  0.00           O
+CONECT    1    2    3
+CONECT    2    1
+CONECT    3    1
+END
