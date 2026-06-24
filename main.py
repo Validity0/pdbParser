@@ -51,54 +51,59 @@ def parse(file1):
     #CRYST1
     labelIt = symbolIt = xIt = yIt = zIt = None
 
-    while i < len(lines):
-        line = lines[i].strip()
+    #check to see if it ends with the cif file
+    if(file1.endswith(".cif")):
+        while i < len(lines):
+            line = lines[i].strip()
 
-        if line.startswith("_cell_length_a"):
-            a = float(line.split()[1])
-        if line.startswith("_cell_length_b"):
-            b = float(line.split()[1])
-        if line.startswith("_cell_length_c"):
-            c = float(line.split()[1])
+            if line.startswith("_cell_length_a"):
+                a = float(line.split()[1])
+            if line.startswith("_cell_length_b"):
+                b = float(line.split()[1])
+            if line.startswith("_cell_length_c"):
+                c = float(line.split()[1])
 
-        id = {}
+            id = {}
 
-        if line == "loop_" and loopNumber == 0:
+            if line == "loop_" and loopNumber == 0:
+                i += 1
+                while i < len(lines) and lines[i].strip().startswith("_atom_site"):
+                    if lines[i].strip() == "_atom_site_label":
+                        labelIt = lineIt
+                    if lines[i].strip() == "_atom_site_type_symbol":
+                        symbolIt = lineIt
+                    if lines[i].strip() == "_atom_site_fract_x":
+                        xIt = lineIt
+                    if lines[i].strip() == "_atom_site_fract_y":
+                        yIt = lineIt
+                    if lines[i].strip() == "_atom_site_fract_z":
+                        zIt = lineIt
+                    lineIt += 1
+                    i += 1
+                if None in (labelIt, symbolIt, xIt, yIt, zIt):
+                    return
+                while i < len(lines) and lines[i].strip() != "" and lines[i].strip() != "loop_":
+
+                    element = lines[i].strip().split()[symbolIt]
+                    x = float(lines[i].strip().split()[xIt]) * a
+                    y = float(lines[i].strip().split()[yIt]) * b
+                    z = float(lines[i].strip().split()[zIt]) * c
+                    name = lines[i].strip().split()[labelIt]
+                    atomNum += 1
+                    id[name] = atomNum
+                    connections[atomNum] = []
+                    positions[atomNum] = [x, y, z]
+                    elements[atomNum] = element
+                    output += "ATOM      " + str(atomNum) + "  " + lines[i].strip().split()[0][0] + "   MOL A   " + lines[i].strip().split()[0][1] + "      " + f"{y: .3f}" + "  " + f"{x: .3f}" + "  " + f"{z: .3f}" + "  1.00  0.00           " + element + "\n" 
+                    i += 1
+
+                loopNumber += 1
+                        
+                        
             i += 1
-            while i < len(lines) and lines[i].strip().startswith("_atom_site"):
-                if lines[i].strip() == "_atom_site_label":
-                    labelIt = lineIt
-                if lines[i].strip() == "_atom_site_type_symbol":
-                    symbolIt = lineIt
-                if lines[i].strip() == "_atom_site_fract_x":
-                    xIt = lineIt
-                if lines[i].strip() == "_atom_site_fract_y":
-                    yIt = lineIt
-                if lines[i].strip() == "_atom_site_fract_z":
-                    zIt = lineIt
-                lineIt += 1
-                i += 1
-            if None in (labelIt, symbolIt, xIt, yIt, zIt):
-                return
-            while i < len(lines) and lines[i].strip() != "" and lines[i].strip() != "loop_":
 
-                element = lines[i].strip().split()[symbolIt]
-                x = float(lines[i].strip().split()[xIt]) * a
-                y = float(lines[i].strip().split()[yIt]) * b
-                z = float(lines[i].strip().split()[zIt]) * c
-                name = lines[i].strip().split()[labelIt]
-                atomNum += 1
-                id[name] = atomNum
-                connections[atomNum] = []
-                positions[atomNum] = [x, y, z]
-                elements[atomNum] = element
-                output += "ATOM      " + str(atomNum) + "  " + lines[i].strip().split()[0][0] + "   MOL A   " + lines[i].strip().split()[0][1] + "      " + f"{y: .3f}" + "  " + f"{x: .3f}" + "  " + f"{z: .3f}" + "  1.00  0.00           " + element + "\n" 
-                i += 1
+    #check for other file types(mol/pdb/sdf/xyz/cor)
 
-            loopNumber += 1
-                    
-                    
-        i += 1
     #iterate through each atom and compare it to every other atom
     for center in positions:
         #print(f"Center: {center}")
@@ -121,7 +126,7 @@ def parse(file1):
 
         output += "\n"
     output += "END"
-    with open("./output/output.pdb", "w") as file:
+    with open("output/output.pdb", "w") as file:
         file.write(output)
 
 def test(file1, file2):
@@ -136,8 +141,8 @@ def test(file1, file2):
     ratio = SequenceMatcher(None, content1, content2).ratio()
     print(f"Similarity: {ratio * 100:.2f}%")
 
-parse("./Data/CIF/data1.cif")
-file1 = "./output/output.pdb"
-file2 = "./Data/PDB/data1.pdb"
+parse("Data/CIF/data1.cif")
+file1 = "output/output.pdb"
+file2 = "Data/PDB/data1.pdb"
 
 test(file1, file2)
