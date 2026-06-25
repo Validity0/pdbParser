@@ -16,8 +16,8 @@ _atom_site_fract_y
 _atom_site_fract_x
 _atom_site_fract_z
 C1   C   0.16667   0.16667   0.16667
-O1   O   0.33333   0.16667   0.16667
-H1   H   0.08333   0.16667   0.16667
+O1   O   0.16667   0.33333   0.16667
+H1   H   0.16667   0.08333   0.16667
 
 loop_
 _geom_bond_atom_site_label_1
